@@ -1,0 +1,33 @@
+Test Data (Program Walkthrough Description)
+
+1. Application Startup
+   When opening the program, the main window is displayed, split into two areas: a control panel on the left, and a canvas on the right with a centered scale platform at the bottom.
+   A label reading "0 kg" is displayed on the platform.
+
+2. Object Creation
+   After selecting a material from the dropdown list and entering the number of cubes (a positive integer), clicking the "Create cubes" button generates the corresponding squares near the top of the canvas.
+   Cubes are arranged in a grid layout (up to 5 per row). If the requested quantity exceeds the generation area bounds, creation stops cleanly without throwing errors.
+   (Height is capped at 250 pixels for newly generated rows, indirectly limiting single-batch generation to 10 cubes).
+
+3. Object Dragging (Drag & Drop)
+   Holding down the left mouse button over any cube raises it above all other elements and follows the cursor.
+   Movement is restricted to canvas boundaries: a cube cannot pass beyond window edges. Releasing the mouse button drops the active selection into gravity physics.
+
+4. Fall Physics Behavior
+   Upon release, the cube falls vertically to the nearest solid surface:
+   - if its horizontal span overlaps with the scale platform, it falls onto the scale;
+   - otherwise, it drops to the bottom boundary of the canvas ("floor").
+   Cubes do not collide or stack on top of each other: they do not serve as support structures or block the fall of other objects.
+
+5. Mass Calculation
+   A cube's mass contributes to the total calculated weight only when meeting two conditions simultaneously:
+   - the cube is located entirely within the horizontal boundaries of the platform;
+   - its vertical coordinate sits exactly at the top surface level of the scale (with a tolerance of ±2 pixels).
+   When these conditions are met, the cube's mass (proportional to material density) is added to the total value displayed centered on the platform in "X.X kg" format.
+
+6. State Reset
+   Clicking the "Reset" button clears all active cubes from the canvas, resets internal program state variables, and resets the platform readout back to "0 kg".
+
+7. Window Resize Adaptation
+   When resizing the main application window, the scale platform automatically redraws centered at the bottom of the canvas, preserving its fixed width and height.
+   The mass text label remains perfectly centered. The positions of previously created cubes remain unaltered.
